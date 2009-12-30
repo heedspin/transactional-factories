@@ -1,0 +1,25 @@
+= Testcase-setup
+
+Testcase-setup uses nested-transactions to allow efficient, programmatic initialization of test data.
+
+Typical setup/teardown TestCase callbacks are called prior to every test method.  Ruby's Test::Unit::TestCase wraps each test method in a transaction.  If your test data must be created programmatically, the data creation code must be run prior to every test method.  When the data creation code is slow, this will greatly increase the time it takes to run tests.  
+
+Testcase-setup provides self.setup and self.teardown callbacks that are run only once for the entire testsuite.  A file-level transaction is used to unwind any changes made in self.setup.  Then any test methods are called in nested transactions (per normal TestCase behavior).  This relies on database transactions so that we only have to run our data creation code once.
+
+  class MyTest < Test::Unit::TestCase
+    def self.setup
+      100.times { MyModel.create }
+    end
+    
+    def test_my_model_1
+      assert_equal 100, MyModel.create
+      MyModel.create
+      assert_equal 101, MyModel.create
+    end
+    
+    def test_my_model_2
+      assert_equal 100, MyModel.create
+      MyModel.create
+      assert_equal 101, MyModel.create
+    end
+  end
