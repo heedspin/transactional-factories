@@ -25,3 +25,17 @@ transactional-factories provides self.setup and self.teardown callbacks that are
       assert_equal 101, MyModel.create
     end
   end
+
+=== Dependencies
+
+<b>nested transactional db</b> - You must be using a database that supports nested transactions or savepoints.  I've only tested on MySQL.  Would be nice to have someone confirm this on PostgreSQL.
+
+<b>>= ActiveRecord 2.3.x</b> - I don't think ActiveRecord supported nested transactions until 2.3.x.
+
+<b>use_transactional_fixtures = false</b> - Your test cases can not use transactional fixtures.  They're doing about the same thing that the transactional-factories gem is doing and they stomp on each other. 
+
+If you get this: TransactionalFactories::TransactionalFixturesEnabled, it's time to disable transactional fixtures doing something like this:
+
+  class ActiveSupport::TestCase
+    self.use_transactional_fixtures = false
+  end
