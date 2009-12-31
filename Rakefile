@@ -4,12 +4,14 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "heedspin-transactional-factories"
+    gem.name = "transactional-factories"
     gem.summary = "Using nested-transactions to initialize test data programmatically."
 		gem.description = "Transactional-factories uses nested-transactions (like transactional fixtures) to allow efficient initialization of test data programmatically (unlike transactional fixtures)."
     gem.email = "tim.harrison@yahoo.com"
     gem.homepage = "http://github.com/heedspin/transactional-factories"
     gem.authors = ["Tim Harrison"]
+    gem.add_dependency('activerecord', '>= 2.3.2')
+    gem.files.exclude '.gitignore'
   end
   Jeweler::RubyforgeTasks.new
 rescue LoadError
