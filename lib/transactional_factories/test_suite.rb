@@ -1,3 +1,5 @@
+require 'test/unit'
+
 module TransactionalFactories
   class TransactionalFixturesEnabled < Exception
   end
