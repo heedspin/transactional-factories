@@ -8,21 +8,25 @@ transactional-factories provides self.setup and self.teardown callbacks that are
 
   require 'transactional_factories'
 
-  class MyTest < Test::Unit::TestCase
+  class MyModelTest < Test::Unit::TestCase
+    # Class method setup is called only once to create test data.
     def self.setup
       100.times { MyModel.create }
     end
-    
-    def test_my_model_1
-      assert_equal 100, MyModel.create
+
+    # Instance method setup is called before each test method (usual ruby behavior).
+    def setup
       MyModel.create
-      assert_equal 101, MyModel.create
     end
-    
-    def test_my_model_2
-      assert_equal 100, MyModel.create
-      MyModel.create
-      assert_equal 101, MyModel.create
+
+    def test_1
+      assert_equal 101, MyModel.count
+      MyModel.delete_all
+      assert_equal 0, MyModel.count
+    end
+
+    def test_2
+      assert_equal 101, MyModel.count
     end
   end
 

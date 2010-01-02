@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "transactional-factories"
-    gem.summary = "Using nested-transactions to initialize test data programmatically."
-		gem.description = "Transactional-factories uses nested-transactions (like transactional fixtures) to allow efficient initialization of test data programmatically (unlike transactional fixtures)."
+		gem.summary = "Using nested-transactions to allow efficient, programmatic initialization of test data"
+		gem.description = gem.summary
     gem.email = "tim.harrison@yahoo.com"
     gem.homepage = "http://github.com/heedspin/transactional-factories"
     gem.authors = ["Tim Harrison"]
