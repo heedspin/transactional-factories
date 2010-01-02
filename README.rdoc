@@ -32,7 +32,7 @@ transactional-factories provides self.setup and self.teardown callbacks that are
 
 <b>>= ActiveRecord 2.3.x</b> - I don't think ActiveRecord supported nested transactions until 2.3.x.
 
-<b>use_transactional_fixtures = false</b> - Your test cases can not use transactional fixtures.  They're doing about the same thing that the transactional-factories gem is doing and they stomp on each other. 
+<b>use_transactional_fixtures = false</b> - Your test cases can not use ActiveRecord transactional fixtures.  Transactional fixtures wrap each test method in a transaction in such a way that does not allow nesting.  Boo!
 
 If you get this: TransactionalFactories::TransactionalFixturesEnabled, it's time to disable transactional fixtures doing something like this:
 
