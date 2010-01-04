@@ -9,7 +9,7 @@ begin
 		gem.description = gem.summary
     gem.email = "tim.harrison@yahoo.com"
     gem.homepage = "http://github.com/heedspin/transactional-factories"
-    gem.authors = ["Tim Harrison"]
+    gem.authors = ["Andrew Carpenter", "Tim Harrison"]
     gem.add_dependency('activesupport', '>= 2.3.2')
     gem.add_dependency('activerecord', '>= 2.3.2')
     gem.files.exclude '.gitignore'
