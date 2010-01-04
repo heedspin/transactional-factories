@@ -10,4 +10,4 @@ ActiveRecord::Base.connection.recreate_database('transactional_factories_test')
 ActiveRecord::Base.clear_active_connections!
 ActiveRecord::Base.establish_connection( { :adapter => 'mysql', :database => 'transactional_factories_test' } )
 
-load File.dirname(__FILE__) + '/db/schema.rb'
+load 'db/schema.rb'

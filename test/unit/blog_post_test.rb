@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'lib/test_helper'
 
 require 'lib/blog_post'
 require 'transactional_factories'
