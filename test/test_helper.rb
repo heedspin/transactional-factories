@@ -11,5 +11,3 @@ ActiveRecord::Base.clear_active_connections!
 ActiveRecord::Base.establish_connection( { :adapter => 'mysql', :database => 'transactional_factories_test' } )
 
 load File.dirname(__FILE__) + '/db/schema.rb'
-$:.push File.dirname(__FILE__) + '/lib'
-$:.push File.dirname(__FILE__) + '/../lib'

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-require 'blog_post'
+require 'lib/blog_post'
 require 'transactional_factories'
 
 class TestBlogPost < Test::Unit::TestCase
