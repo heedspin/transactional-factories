@@ -1,6 +1,6 @@
-class Test::Unit::TestCase
-  class << self
-    def suite
+module TransactionalFactories
+  module ClassMethods
+    def suite_with_transactions
       method_names = public_instance_methods(true)
       tests = method_names.delete_if {|method_name| method_name !~ /^test./}
       suite = TransactionalFactories::TestSuite.new(name)
@@ -18,4 +18,13 @@ class Test::Unit::TestCase
       return suite
     end
   end
+  
+  def self.included(klass)
+    class << klass
+      include ClassMethods
+      alias_method_chain 'suite', 'transactions'
+    end
+  end
 end
+
+Test::Unit::TestCase.send(:include, TransactionalFactories)
