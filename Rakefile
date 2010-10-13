@@ -8,6 +8,7 @@ begin
 		gem.summary = "Using nested-transactions to allow efficient, programmatic initialization of test data"
 		gem.description = gem.summary
     gem.email = "tim.harrison@yahoo.com"
+    gem.homepage = "http://open.wested.org/testing/2010/03/22/transactional-factories.html"
     gem.homepage = "http://github.com/heedspin/transactional-factories"
     gem.authors = ["Andrew Carpenter", "Tim Harrison"]
     gem.add_dependency('activesupport', '>= 2.3.2')
