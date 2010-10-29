@@ -10,13 +10,14 @@ module TransactionalFactories
           raise TransactionalFixturesEnabled, 'transactional-factories does not work with transactional fixtures.  Please set use_transactional_fixtures = false.'
         end
       end
+      transaction_class = testcase.class.respond_to?(:transaction_class) ? testcase.class.transaction_class : ActiveRecord::Base
       if @tests.any? { |testcase| testcase.method_name != 'default_test' }
-        ActiveRecord::Base.transaction(:requires_new => true) do
+        transaction_class.transaction(:requires_new => true) do
           testcase.class.setup if testcase
           begin
             yield(STARTED, name)
             @tests.each do |test|
-              ActiveRecord::Base.transaction(:requires_new => true) do
+              transaction_class.transaction(:requires_new => true) do
                 test.run(result, &progress_block)
                 raise ActiveRecord::Rollback
               end

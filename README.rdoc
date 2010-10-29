@@ -30,6 +30,17 @@ transactional-factories provides self.setup and self.teardown callbacks that are
     end
   end
 
+=== Multiple Database Connections
+
+If you have an application that connects to multiple databases, you will need to tell transactional-factories which connection to use when creating a transaction.  This is done at with another class-level callback: TestCase.transaction_class.  E.g.,
+
+  class MyModelTest < Test::Unit::TestCase
+		def self.transaction_class
+		  # Default is ActiveRecord::Base
+			ModelWithDifferentDatabaseConnection
+		end
+	end
+
 === Dependencies
 
 <b>nested transactional db</b> - You must be using a database that supports nested transactions or savepoints.  I've only tested on MySQL.  Would be nice to have someone confirm this on PostgreSQL.

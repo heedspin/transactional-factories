@@ -1,0 +1,4 @@
+
+=Version 0.4.0 - 2010-10-29=
+
+ * Added support for testcase.transaction_class method to allow a testcase to specify which connection to use for transactions.
