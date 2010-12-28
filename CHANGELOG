@@ -2,3 +2,7 @@
 =Version 0.4.0 - 2010-10-29=
 
  * Added support for testcase.transaction_class method to allow a testcase to specify which connection to use for transactions.
+
+=Version 0.5.0 - 2010-10-29=
+
+ * Added support for multiple simultaneous transactions.  0.4.0 did not really make any sense without this.

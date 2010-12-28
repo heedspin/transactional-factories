@@ -28,6 +28,7 @@ module TransactionalFactories
       include ClassMethods
       alias_method_chain 'suite', 'transactions'
       cattr_accessor :use_transactional_factories
+      cattr_accessor :transaction_classes
     end
   end
 end

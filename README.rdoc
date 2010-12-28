@@ -32,13 +32,10 @@ transactional-factories provides self.setup and self.teardown callbacks that are
 
 === Multiple Database Connections
 
-If you have an application that connects to multiple databases, you will need to tell transactional-factories which connection to use when creating a transaction.  This is done at with another class-level callback: TestCase.transaction_class.  E.g.,
+If you have an application that connects to multiple databases, transactional-factories needs to create transactions for all of them.  This is done at with another class-level accessor: TestCase.transaction_classes.  In the example below two transactions (to two different databases) are created:
 
   class MyModelTest < Test::Unit::TestCase
-		def self.transaction_class
-		  # Default is ActiveRecord::Base
-			ModelWithDifferentDatabaseConnection
-		end
+		self.transaction_classes = [ModelWithDifferentDatabaseConnection, ActiveRecord::Base]
 	end
 
 === Dependencies

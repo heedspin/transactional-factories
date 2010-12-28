@@ -10,16 +10,20 @@ module TransactionalFactories
           raise TransactionalFixturesEnabled, 'transactional-factories does not work with transactional fixtures.  Please set use_transactional_fixtures = false.'
         end
       end
-      transaction_class = testcase.class.respond_to?(:transaction_class) ? testcase.class.transaction_class : ActiveRecord::Base
+      transaction_classes = testcase.class.transaction_classes if testcase.class.respond_to?(:transaction_classes)
+      unless transaction_classes.nil? or transaction_classes.is_a?(Enumerable)
+        transaction_classes = [transaction_classes]
+      end
+      transaction_classes ||= [ActiveRecord::Base]
+
       if @tests.any? { |testcase| testcase.method_name != 'default_test' }
-        transaction_class.transaction(:requires_new => true) do
+        run_rollback_transactions(transaction_classes) do
           testcase.class.setup if testcase
           begin
             yield(STARTED, name)
             @tests.each do |test|
-              transaction_class.transaction(:requires_new => true) do
+              run_rollback_transactions(transaction_classes)  do
                 test.run(result, &progress_block)
-                raise ActiveRecord::Rollback
               end
             end
             yield(FINISHED, name)
@@ -29,8 +33,19 @@ module TransactionalFactories
             testcase.class.teardown if testcase.class.respond_to?(:teardown)
           end
           Timecop.return if defined?(Timecop)
-          raise ActiveRecord::Rollback
         end
+      end
+    end
+
+    # Recursively setup transactions that roll back...
+    def run_rollback_transactions(transaction_classes, &block)
+      transaction_classes.first.transaction(:requires_new => true) do
+        if transaction_classes.size <= 1
+          yield
+        else
+          run_rollback_transactions(transaction_classes[1..transaction_classes.size-1], &block)
+        end
+        raise ActiveRecord::Rollback
       end
     end
   end
